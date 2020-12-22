@@ -1,0 +1,61 @@
+
+Sub ticker_total()
+
+    Dim ws As Worksheet
+    
+    
+  For Each ws In Worksheets
+    
+       
+        Dim lastrow As Long
+        Dim i As Long
+        
+        lastrow = ws.Cells(Rows.Count, 1).End(xlUp).Row
+  
+        For i = 2 To lastrow
+        
+        
+        Dim ticker_name As String
+        ticker_name = " "    
+        Dim max_ticker As String
+        max_ticker = " "
+        Dim min_ticker As String
+        min_ticker = " "
+        Dim max_percent As Double
+        max_percent = 0
+        Dim min_percent As Double
+        min_percent = 0
+        Dim max_volume_ticker As String
+        max_volume_ticker = " "
+        Dim max_vol As Double
+        max_vol = 0
+        
+        ws.Range("O2").Value = "Greatest % Increase"
+        ws.Range("O3").Value = "Greatest % Decrease"
+        ws.Range("O4").Value = "Greatest Total Volume"
+        ws.Range("P1").Value = "Ticker"
+        ws.Range("Q1").Value = "Value"
+                
+                If (percent_change > max_percent) Then
+                    max_percent = percent_change
+                    max_ticker = ticker_name
+                ElseIf (percent_change < min_percent) Then
+                    min_percent = percent_change
+                    min_ticker = ticker_name
+                End If
+    
+                If (Total_Ticker_Volume > max_vol) Then
+                    max_vol = Total_Ticker_Volume
+                    max_volume_ticker = ticker_name
+                End If
+                
+                
+                percent_change = 0
+                Total_Ticker_Volume = 0
+            
+                Total_Ticker_Volume = Total_Ticker_Volume + ws.Cells(i, 7).Value
+      
+        Next i
+               
+     Next ws
+End Sub
