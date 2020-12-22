@@ -1,142 +1,3 @@
-Sub total_ticker()
-    
-    Dim ws As Worksheet
-    For Each ws In ThisWorkbook.Worksheets
-        ws.Activate
-
-        
-        Range("I1").Value = "Ticker"
-        Range("J1").Value = "Yearly Change"
-        Range("K1").Value = "Percent Change"
-        Range("L1").Value = "Total Stock Volume"
-
-        
-        
-        Dim ticker_stock As String
-        Dim volume_stock As Double
-        volume_stock = 0
-        Dim j As Integer
-        j = 2
-
-        
-        For i = 2 To 43398
-            If Cells(i, 1).Value = Cells(i + 1, 1).Value Then
-                volume_stock = volume_stock + Cells(i, 7).Value
-            ElseIf Cells(i, 1).Value <> Cells(i + 1, 1).Value Then
-                volume_stock = volume_stock + Cells(i, 7).Value
-                Cells(j, 9).Value = Cells(i, 1).Value
-                Cells(j, 12).Value = volume_stock
-                j = j + 1
-                volume_stock = 0
-            End If
-        Next i
-
-        Dim year_start As Double
-        Dim year_end As Double
-        Dim year_change As Double
-        Dim percent_change
-        Dim k As Integer
-        k = 2
-
-        For i = 2 To 43398
-            If Right(Cells(i, 2), 4) = "0101" Then
-                year_start = Cells(i, 3)
-            ElseIf Right(Cells(i, 2), 4) = "1231" Then
-                year_end = Cells(i, 6)
-                year_change = year_end - year_start
-                percent_change = year_change / year_start
-                Cells(k, 10).Value = year_change
-                If Cells(k, 10).Value > 0 Then
-                    Cells(k, 10).Interior.ColorIndex = 4
-                ElseIf Cells(k, 10).Value < 0 Then
-                    Cells(k, 10).Interior.ColorIndex = 3
-                End If
-                Cells(k, 11).Value = percent_change
-                k = k + 1
-            End If
-               
-        Next i
-    
-    
-
-        Range("K1").EntireColumn.NumberFormat = "0.00%"
-
-        
-        Dim sheet As String
-        sheet = ActiveSheet.Name
-        Worksheets(sheet).Columns("I:L").AutoFit
-        Worksheets(sheet).Columns("O:Q").AutoFit
-
-    
-    Next ws
-    
-    End Sub
-    ***************************************************************************************************************
-    Sub ticker()
-    'This creates a "worksheet loop" that will automatically cycle through each page of the workbook and apply the macro thereto.
-    Dim ws As Worksheet
-   For Each ws In ThisWorkbook.Worksheets
-        ws.Activate
-        If ws.Cells(i + 1, 1).Value <> ws.Cells(i, 1).Value Then
-            
-                ticker_name = ws.Cells(i, 1).Value
-        
-Range("P1").Value = "Ticker"
-        Range("Q1").Value = "Value"
-        Range("O2").Value = "Greatest % Increase"
-        Range("O3").Value = "Greatest % Decrease"
-        Range("O4").Value = "Greatest Total Volume"
-        
-    Dim year_percent As Double
-    year_percent = 0
-    Dim percent_change As Double
-    Dim min_ticker
-    Dim max_ticker
-    'Dim ticker_name As Double
-    Dim max_vol As Double
-    Dim min_vol As Double
-    Dim Total_Volume
-    Total_Volume = 0
-    Dim max_percent As Double
-    max_percent = 0
-    Dim min_percent As Double
-    min_percent = 0
-
-        For i = 2 To 43398
-        
-    If (year_percent > max_percent) Then
-                    max_percent = year_percent
-                    max_ticker = ticker_name
-                ElseIf (year_percent < min_percent) Then
-                     min_percent = year_percent
-                     min_ticker = ticker_name
-                    
-                End If
-                       
-                If (Total_Volume > max_vol) Then
-                    max_vol = Total_Volume
-                    max_ticker = ticker_name
-                End If
-                
-                
-            Next i
-                        Else
-                
-                Total_Volume = Total_Volume + ws.Cells(i, 7).Value
-            End If
-                ws.Range("Q2").Value = ((max_percent) & "%")
-                ws.Range("Q3").Value = ((min_percent) & "%")
-                ws.Range("P2").Value = max_ticker
-                ws.Range("P3").Value = min_ticker
-                ws.Range("Q4").Value = max_vol
-                ws.Range("P4").Value = Total_Volume
-                
-                Next ws
-            
-
-End Sub
-**********************************************************************************************
-Final one
 Sub ticker_total()
 
     Dim ws As Worksheet
@@ -213,13 +74,11 @@ Sub ticker_total()
                 
                 ws.Range("L" & summary_table).Value = Total_Ticker_Volume
                 
-                ' Add 1 to the summary table row count
-                summary_table = summary_table + 1
-                ' Reset Delta_rice and Delta_Percent holders, as we will be working with new Ticker
+                               summary_table = summary_table + 1
+               
                 year_change = 0
-                ' Hard part,do this in the beginning of the for loop Delta_Percent = 0
+                
                 close_price = 0
-                ' Capture next Ticker's Open_Price
                 open_price = ws.Cells(i + 1, 3).Value
               
         Dim max_ticker As String
@@ -257,9 +116,7 @@ Sub ticker_total()
                 
                 percent_change = 0
                 Total_Ticker_Volume = 0
-                
-            
-            
+                 
             Else
                 
                 Total_Ticker_Volume = Total_Ticker_Volume + ws.Cells(i, 7).Value
@@ -284,6 +141,3 @@ Sub ticker_total()
      Next ws
 End Sub
 
-
-        
-        
