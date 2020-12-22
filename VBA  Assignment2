@@ -1,25 +1,25 @@
- Sub total_ticker()
-    
+Sub total_ticker()
+   
     Dim ws As Worksheet
     For Each ws In ThisWorkbook.Worksheets
         ws.Activate
 
-        
+       
         Range("I1").Value = "Ticker"
         Range("J1").Value = "Yearly Change"
         Range("K1").Value = "Percent Change"
         Range("L1").Value = "Total Stock Volume"
-
-        
+ 
         
         Dim ticker_stock As String
         Dim volume_stock As Double
         volume_stock = 0
+
+        
         Dim j As Integer
         j = 2
 
-        
-        For i = 2 To 43398
+               For i = 2 To 43398
             If Cells(i, 1).Value = Cells(i + 1, 1).Value Then
                 volume_stock = volume_stock + Cells(i, 7).Value
             ElseIf Cells(i, 1).Value <> Cells(i + 1, 1).Value Then
@@ -56,8 +56,7 @@
             End If
                
         Next i
-    
-    
+
 
         Range("K1").EntireColumn.NumberFormat = "0.00%"
 
@@ -69,9 +68,10 @@
 
     
     Next ws
-    
-    End Sub
-    
+
+End Sub
+
+
 
 
 
